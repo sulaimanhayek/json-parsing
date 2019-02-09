@@ -6,8 +6,64 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
 </head>
-<body>
+<body class="bg-light">
+<div class="container" id="codelab">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <img class="w-100" :src="response.image">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h2>{{answer}}</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-primary" @click="fetchAnswer">refresh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+  new Vue({
+    el: "#codelab",
+    data: {
+      response: {
+        answer: "",
+        image: ""
+      }
+    },
+    methods: {
+      fetchAnswer() {
+        this.response.image = "";
+        axios.get('https://yesno.wtf/api').then(response => {
+          this.response = response.data;
+        })
+      }
+    },
+    computed: {
+      answer() {
+        return this.response.answer.toUpperCase();
+      }
+    }
+  })
+</script>
+
 
 </body>
 </html>
